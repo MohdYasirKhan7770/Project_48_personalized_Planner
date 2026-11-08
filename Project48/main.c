@@ -1,45 +1,42 @@
+#include "topic.h"
 #include <stdio.h>
 
-struct Topic {
-  int id;
-  char name[50];
-  int difficulty;
-  int priority;
-  int studyHours;
-  float score;
-};
 
 int main() {
-  struct Topic topic1;
+  struct Topic topics[MAX_TOPICS];
 
-  printf("=== PERSONALIZED LEARNING PATH PLANNER ===\n\n");
+  int topicCount = 0;
+  int choice;
 
-  printf("Enter Topic ID: ");
-  scanf("%d", &topic1.id);
+  while (1) {
+    printf("\n========================================\n");
+    printf("   PERSONALIZED LEARNING PATH PLANNER\n");
+    printf("========================================\n");
 
-  printf("Enter Topic Name: ");
-  scanf(" %[^\n]", topic1.name);
+    printf("1. Add Topic\n");
+    printf("2. View All Topics\n");
+    printf("3. Exit\n");
 
-  printf("Enter Difficulty (1-5): ");
-  scanf("%d", &topic1.difficulty);
+    printf("\nEnter your choice: ");
+    scanf("%d", &choice);
 
-  printf("Enter Priority (1-5): ");
-  scanf("%d", &topic1.priority);
+    if (choice == 1) {
+      addTopic(topics, &topicCount);
+    }
 
-  printf("Enter Required Study Hours: ");
-  scanf("%d", &topic1.studyHours);
+    else if (choice == 2) {
+      viewTopics(topics, topicCount);
+    }
 
-  printf("Enter Assessment Score: ");
-  scanf("%f", &topic1.score);
+    else if (choice == 3) {
+      printf("\nThank you for using the Learning Path Planner!\n");
+      break;
+    }
 
-  printf("\n--- Topic Information ---\n");
-
-  printf("ID: %d\n", topic1.id);
-  printf("Name: %s\n", topic1.name);
-  printf("Difficulty: %d\n", topic1.difficulty);
-  printf("Priority: %d\n", topic1.priority);
-  printf("Study Hours: %d\n", topic1.studyHours);
-  printf("Assessment Score: %.2f%%\n", topic1.score);
+    else {
+      printf("\nInvalid choice. Please enter 1, 2, or 3.\n");
+    }
+  }
 
   return 0;
 }
