@@ -3,16 +3,19 @@
 
 #define MAX_TOPICS 100
 
-struct Topic {
-  int id;
-  char name[50];
-  int difficulty;
-  int priority;
-  int studyHours;
-  float score;
+struct Topic
+{
+    int id;
+    char name[50];
+    int difficulty;
+    int priority;
+    int studyHours;
+    float score;
 };
 
 void addTopic(struct Topic topics[], int *topicCount);
 void viewTopics(struct Topic topics[], int topicCount);
+void searchTopic(struct Topic topics[], int topicCount);
+void detectWeakTopics(struct Topic topics[], int topicCount);
 
 #endif
