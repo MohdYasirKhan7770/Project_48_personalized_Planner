@@ -17,5 +17,7 @@ void addTopic(struct Topic topics[], int *topicCount);
 void viewTopics(struct Topic topics[], int topicCount);
 void searchTopic(struct Topic topics[], int topicCount);
 void detectWeakTopics(struct Topic topics[], int topicCount);
+void rankTopics(struct Topic topics[], int topicCount);
+int getTopicIndexById(struct Topic topics[], int topicCount, int id);
 
 #endif

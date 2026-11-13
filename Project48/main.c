@@ -1,13 +1,10 @@
-#include "topic.h"
 #include <stdio.h>
+#include "topic.h"
+#include "algorithms.h"
 
-int main()
-{
-    struct Topic topics[MAX_TOPICS];
-    int topicCount = 0;
-    int choice;
+int main() 
 
-    while (1)
+while (1)
     {
         printf("\n========================================\n");
         printf("   PERSONALIZED LEARNING PATH PLANNER\n");
@@ -16,7 +13,10 @@ int main()
         printf("2. View All Topics\n");
         printf("3. Search Topic\n");
         printf("4. Detect Weak Topics\n");
-        printf("5. Exit\n");
+        printf("5. Rank Topics (Priority & Weakness)\n");
+        printf("6. Add Prerequisite Relationship\n");
+        printf("7. View Prerequisite Graph\n");
+        printf("8. Exit\n");
         printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
@@ -38,12 +38,24 @@ int main()
         }
         else if (choice == 5)
         {
+            rankTopics(topics, topicCount);
+        }
+        else if (choice == 6)
+        {
+            addPrerequisite(adjMatrix, topics, topicCount);
+        }
+        else if (choice == 7)
+        {
+            viewPrerequisites(adjMatrix, topics, topicCount);
+        }
+        else if (choice == 8)
+        {
             printf("\nThank you for using the Learning Path Planner!\n");
             break;
         }
         else
         {
-            printf("\nInvalid choice. Please enter 1-5.\n");
+            printf("\nInvalid choice. Please enter 1-8.\n");
         }
     }
 

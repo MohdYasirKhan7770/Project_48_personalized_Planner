@@ -173,54 +173,90 @@ void detectWeakTopics(struct Topic topics[], int topicCount)
 }
 
 
-// ============================================================
-// STEP 4: Detect Weak Topics based on assessment scores
-// Algorithm: Linear Scan with Threshold Filtering
-// Time Complexity: O(n) - checks each topic once
-// Space Complexity: O(1) - no extra arrays needed
-// ============================================================
-void detectWeakTopics(struct Topic topics[], int topicCount)
+// Helper function: calculate Urgency Score for a topic
+// Formula: (Priority * 20) + (100 - Score)
+float calculateUrgency(struct Topic t)
 {
-    float threshold;
-    int weakCount = 0;
+    return (t.priority * 20.0f) + (100.0f - t.score);
+}
 
-    // Check if there are no topics
+
+// ============================================================
+// STEP 5: Sort and Rank Topics by Urgency (Priority + Weakness)
+// Algorithm: Selection Sort (Descending Order)
+// Time Complexity: O(n^2) comparisons, O(n) swaps
+// Space Complexity: O(n) for the display copy
+// ============================================================
+void rankTopics(struct Topic topics[], int topicCount)
+{
     if (topicCount == 0)
     {
         printf("\nNo topics have been added yet.\n");
         return;
     }
 
-    // Ask the user for the weakness threshold
-    printf("\nEnter weakness threshold (e.g., 50 means scores below 50%% are weak): ");
-    scanf("%f", &threshold);
-
-    printf("\n========== WEAK TOPICS (Score < %.2f%%) ==========\n", threshold);
-
-    // Linear scan: check every topic one by one
+    // Create a local copy so we do not alter the user's original order
+    struct Topic sorted[MAX_TOPICS];
     for (int i = 0; i < topicCount; i++)
     {
-        // If this topic's score is below the threshold, it's weak
-        if (topics[i].score < threshold)
-        {
-            printf("\n[WEAK] Topic: %s\n", topics[i].name);
-            printf("       ID: %d\n", topics[i].id);
-            printf("       Score: %.2f%%\n", topics[i].score);
-            printf("       Difficulty: %d | Priority: %d\n",
-                   topics[i].difficulty, topics[i].priority);
+        sorted[i] = topics[i];
+    }
 
-            weakCount++;
+    // Selection Sort: find the topic with maximum urgency and place at index i
+    for (int i = 0; i < topicCount - 1; i++)
+    {
+        int maxIdx = i;
+        for (int j = i + 1; j < topicCount; j++)
+        {
+            if (calculateUrgency(sorted[j]) > calculateUrgency(sorted[maxIdx]))
+            {
+                maxIdx = j;
+            }
+        }
+
+        // Swap the highest urgency topic into position i
+        if (maxIdx != i)
+        {
+            struct Topic temp = sorted[i];
+            sorted[i] = sorted[maxIdx];
+            sorted[maxIdx] = temp;
         }
     }
 
-    // Summary
-    if (weakCount == 0)
+    // Display the ranked topics in a formatted table
+    printf("\n===================================================================\n");
+    printf("   RANKED TOPICS (Most Urgent to Least Urgent)\n");
+    printf("   Formula: Urgency = (Priority * 20) + (100 - Score)\n");
+    printf("===================================================================\n");
+    printf("%-5s %-6s %-20s %-8s %-10s %-10s\n", "Rank", "ID", "Name", "Priority", "Score", "Urgency");
+    printf("-------------------------------------------------------------------\n");
+
+    for (int i = 0; i < topicCount; i++)
     {
-        printf("\nGreat! No weak topics found above the threshold.\n");
+        float urgency = calculateUrgency(sorted[i]);
+        printf("%-5d %-6d %-20s %-8d %6.2f%%   %8.2f\n",
+               i + 1,
+               sorted[i].id,
+               sorted[i].name,
+               sorted[i].priority,
+               sorted[i].score,
+               urgency);
     }
-    else
-    {
-        printf("\n-----------------------------\n");
-        printf("Total weak topics: %d out of %d\n", weakCount, topicCount);
-    }
+    printf("-------------------------------------------------------------------\n");
 }
+
+
+// Helper function: Find the array index (0 to topicCount-1) for a given Topic ID
+// Returns -1 if the ID is not found.
+int getTopicIndexById(struct Topic topics[], int topicCount, int id)
+{
+    for (int i = 0; i < topicCount; i++)
+    {
+        if (topics[i].id == id)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
