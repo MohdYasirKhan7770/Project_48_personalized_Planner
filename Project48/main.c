@@ -18,14 +18,19 @@ int main(void)
         printf("========================================\n");
         printf("1. Add Topic\n");
         printf("2. View All Topics\n");
-        printf("3. Search Topic\n");
-        printf("4. Detect Weak Topics\n");
-        printf("5. Rank Topics (Priority & Weakness)\n");
-        printf("6. Add Prerequisite Relationship\n");
-        printf("7. View Prerequisite Graph\n");
-        printf("8. Exit\n");
+        printf("3. Search Topic by ID (Linear Search)\n");
+        printf("4. Add Prerequisite Relationship\n");
+        printf("5. View Prerequisite Graph\n");
+        printf("6. Generate Optimal Study Plan (0/1 Knapsack DP)\n");
+        printf("7. Exit\n");
         printf("\nEnter your choice: ");
-        scanf("%d", &choice);
+
+        if (scanf("%d", &choice) != 1)
+        {
+            printf("\nInvalid choice. Please enter a number.\n");
+            while (getchar() != '\n');
+            continue;
+        }
 
         if (choice == 1)
         {
@@ -33,7 +38,7 @@ int main(void)
         }
         else if (choice == 2)
         {
-            viewTopics(topics, topicCount);
+            displayTopics(topics, topicCount);
         }
         else if (choice == 3)
         {
@@ -41,28 +46,34 @@ int main(void)
         }
         else if (choice == 4)
         {
-            detectWeakTopics(topics, topicCount);
+            addPrerequisite(adjMatrix, topics, topicCount);
         }
         else if (choice == 5)
         {
-            rankTopics(topics, topicCount);
+            viewPrerequisites(adjMatrix, topics, topicCount);
         }
         else if (choice == 6)
         {
-            addPrerequisite(adjMatrix, topics, topicCount);
+            int availableTime;
+            printf("\nEnter your available study time (hours): ");
+            if (scanf("%d", &availableTime) == 1)
+            {
+                generateLearningPlan(topics, topicCount, availableTime);
+            }
+            else
+            {
+                printf("\nInvalid time entered!\n");
+                while (getchar() != '\n');
+            }
         }
         else if (choice == 7)
-        {
-            viewPrerequisites(adjMatrix, topics, topicCount);
-        }
-        else if (choice == 8)
         {
             printf("\nThank you for using the Learning Path Planner!\n");
             break;
         }
         else
         {
-            printf("\nInvalid choice. Please enter 1-8.\n");
+            printf("\nInvalid choice. Please enter 1-7.\n");
         }
     }
 

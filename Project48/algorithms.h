@@ -12,4 +12,7 @@ void addPrerequisite(int adjMatrix[MAX_TOPICS][MAX_TOPICS], struct Topic topics[
 // View all existing prerequisite relationships
 void viewPrerequisites(int adjMatrix[MAX_TOPICS][MAX_TOPICS], struct Topic topics[], int topicCount);
 
+// Generate optimal study plan using 0/1 Knapsack Dynamic Programming
+void generateLearningPlan(struct Topic topics[], int topicCount, int availableTime);
+
 #endif

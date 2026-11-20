@@ -226,3 +226,49 @@ void displayTopics(
         topicCount
     );
 }
+
+
+/* =========================================================
+   SEARCH A TOPIC BY ID (Linear Search)
+   ========================================================= */
+
+void searchTopic(
+    struct Topic topics[],
+    int topicCount)
+{
+    int searchId;
+
+    if (topicCount == 0)
+    {
+        printf("\nNo topics added yet.\n");
+        return;
+    }
+
+    printf("\nEnter Topic ID to search: ");
+
+    if (scanf("%d", &searchId) != 1)
+    {
+        printf("\nInvalid input!\n");
+        while (getchar() != '\n');
+        return;
+    }
+
+    /* Linear Search */
+    for (int i = 0; i < topicCount; i++)
+    {
+        if (topics[i].id == searchId)
+        {
+            printf("\n========================================\n");
+            printf("              TOPIC FOUND\n");
+            printf("========================================\n");
+            printf("ID          : %d\n", topics[i].id);
+            printf("Name        : %s\n", topics[i].name);
+            printf("Study Time  : %d hours\n", topics[i].studyTime);
+            printf("Mastery Gain: %d\n", topics[i].masteryGain);
+            printf("========================================\n");
+            return;
+        }
+    }
+
+    printf("\nTopic with ID %d not found!\n", searchId);
+}

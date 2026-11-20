@@ -26,4 +26,16 @@ void displayTopics(
     int topicCount
 );
 
+/* Search a topic by ID (Linear Search) */
+void searchTopic(
+    struct Topic topics[],
+    int topicCount
+);
+
+/* Search a topic by ID (Linear Search) */
+void searchTopic(
+    struct Topic topics[],
+    int topicCount
+);
+
 #endif
