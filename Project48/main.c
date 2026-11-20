@@ -2,9 +2,16 @@
 #include "topic.h"
 #include "algorithms.h"
 
-int main() 
+int main(void)
+{
+    struct Topic topics[MAX_TOPICS];
+    int adjMatrix[MAX_TOPICS][MAX_TOPICS];
+    int topicCount = 0;
+    int choice;
 
-while (1)
+    initGraph(adjMatrix);
+
+    while (1)
     {
         printf("\n========================================\n");
         printf("   PERSONALIZED LEARNING PATH PLANNER\n");
