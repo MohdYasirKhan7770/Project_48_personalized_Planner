@@ -2,22 +2,28 @@
 #define TOPIC_H
 
 #define MAX_TOPICS 100
+#define NAME_LENGTH 100
 
 struct Topic
 {
     int id;
-    char name[50];
-    int difficulty;
-    int priority;
-    int studyHours;
-    float score;
+    char name[NAME_LENGTH];
+
+    /* Used by 0/1 Knapsack */
+    int studyTime;
+    int masteryGain;
 };
 
-void addTopic(struct Topic topics[], int *topicCount);
-void viewTopics(struct Topic topics[], int topicCount);
-void searchTopic(struct Topic topics[], int topicCount);
-void detectWeakTopics(struct Topic topics[], int topicCount);
-void rankTopics(struct Topic topics[], int topicCount);
-int getTopicIndexById(struct Topic topics[], int topicCount, int id);
+/* Add a new topic */
+void addTopic(
+    struct Topic topics[],
+    int *topicCount
+);
+
+/* Display all topics */
+void displayTopics(
+    struct Topic topics[],
+    int topicCount
+);
 
 #endif
